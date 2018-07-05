@@ -19,8 +19,8 @@ export class DeviceComponent implements OnInit {
 
 
   private _state: State = State.Undefined;
-  public text = '';
-  public style;
+  public buttonText = '';
+  public buttonStyle;
 
   private _labelState: State = State.Undefined;
   public labelText = '';
@@ -99,9 +99,9 @@ export class DeviceComponent implements OnInit {
   private updateProperties() {
     const tuple = DeviceComponent.stateMap.get(this.state);
 
-    this.text = tuple.v1;
+    this.buttonText = tuple.v1;
     const style = 'background-color: ' + tuple.v2;
-    this.style = this.sanitizer.bypassSecurityTrustStyle(style);
+    this.buttonStyle = this.sanitizer.bypassSecurityTrustStyle(style);
   }
 
   private updateLabelProperties() {
