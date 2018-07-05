@@ -9,7 +9,7 @@ import {
   IMqttMessage
 } from 'ngx-mqtt';
 
-import { State } from '../output/state.enum';
+import { State } from '../device/state.enum';
 
 @Component({
   selector: 'app-switches',

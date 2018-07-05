@@ -10,7 +10,7 @@ import {
 
 import { MqttConnector } from './mqtt-connector';
 import { SwitchesComponent } from './switches.component';
-import { OutputComponent } from '../output/output.component';
+import { DeviceComponent } from '../device/device.component';
 
 // TODO: configure from outside
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
@@ -25,11 +25,11 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 @NgModule({
   declarations: [
     SwitchesComponent,
-    OutputComponent
+    DeviceComponent
   ],
   exports: [
     SwitchesComponent,
-    OutputComponent
+    DeviceComponent
   ],
   imports: [
     BrowserModule,

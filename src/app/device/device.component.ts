@@ -5,11 +5,11 @@ import { State } from './state.enum';
 import { Tuple } from './tuple';
 
 @Component({
-  selector: 'app-output',
-  templateUrl: './output.component.html',
-  styleUrls: ['./output.component.css']
+  selector: 'app-device',
+  templateUrl: './device.component.html',
+  styleUrls: ['./device.component.css']
 })
-export class OutputComponent implements OnInit {
+export class DeviceComponent implements OnInit {
 
   private static readonly stateMap = new Map<State, Tuple<string, string>>([
     [State.Undefined, new Tuple('?', 'yellow')],
@@ -97,7 +97,7 @@ export class OutputComponent implements OnInit {
   }
 
   private updateProperties() {
-    const tuple = OutputComponent.stateMap.get(this.state);
+    const tuple = DeviceComponent.stateMap.get(this.state);
 
     this.text = tuple.v1;
     const style = 'background-color: ' + tuple.v2;
@@ -105,7 +105,7 @@ export class OutputComponent implements OnInit {
   }
 
   private updateLabelProperties() {
-    const tuple = OutputComponent.stateMap.get(this.state);
+    const tuple = DeviceComponent.stateMap.get(this.state);
 
     this.labelText = tuple.v1;
     const style = 'background-color: ' + tuple.v2;
