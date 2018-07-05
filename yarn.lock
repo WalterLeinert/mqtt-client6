@@ -220,6 +220,10 @@
   version "8.9.5"
   resolved "http://localhost:4873/@types%2fnode/-/node-8.9.5.tgz#162b864bc70be077e6db212b322754917929e976"
 
+"@types/paho-mqtt@^1.0.3":
+  version "1.0.3"
+  resolved "http://localhost:4873/@types%2fpaho-mqtt/-/paho-mqtt-1.0.3.tgz#2eda0886584e1e69551f5203934878c326fe3566"
+
 "@types/q@^0.0.32":
   version "0.0.32"
   resolved "http://localhost:4873/@types%2fq/-/q-0.0.32.tgz#bd284e57c84f1325da702babfc82a5328190c0c5"
@@ -4376,6 +4380,10 @@ p-map@^1.1.1:
 p-try@^1.0.0:
   version "1.0.0"
   resolved "http://localhost:4873/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
+
+paho-mqtt@^1.0.4:
+  version "1.0.4"
+  resolved "http://localhost:4873/paho-mqtt/-/paho-mqtt-1.0.4.tgz#279822dd8ea00a961bf141f03d09c9f4339ebb79"
 
 pako@~1.0.2, pako@~1.0.5:
   version "1.0.6"

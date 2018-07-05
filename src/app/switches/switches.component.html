@@ -1,0 +1,29 @@
+<div>
+  <h1>My Web-IO</h1>
+
+  <table>
+    <tr>
+      <th></th>
+      <th>Input</th>
+      <th>Output</th>
+    </tr>
+    <tr>
+      <td>[0]</td>
+      <td class="unknown" id="input0">
+        <app-input [on]="input0On" (onChange)="onInput0Clicked($event)"></app-input>
+      </td>
+      <td class="unknown" id="output0">
+        <app-output [on]="output0On" (onChange)="onOutput0Clicked($event)"></app-output>
+      </td>
+    </tr>
+    <tr>
+      <td>[1]</td>
+      <td class="unknown" id="input1">
+        <app-input [on]="input1On" (onChange)="onInput1Clicked($event)"></app-input>
+      </td>
+      <td class="unknown" id="output1">
+        <app-output [on]="output1On" (onChange)="onOutput1Clicked($event)"></app-output>
+      </td>
+    </tr>
+  </table>
+</div>
