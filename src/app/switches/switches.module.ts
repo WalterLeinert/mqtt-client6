@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import {
   MqttModule,
@@ -36,10 +36,10 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
-    HttpModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
   ],
-  providers: [ MqttConnector ]
+  providers: [MqttConnector]
 })
 export class SwitchesModule { }
