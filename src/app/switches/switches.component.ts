@@ -17,7 +17,7 @@ import { State } from '../device/state.enum';
   styleUrls: ['./switches.component.css']
 })
 export class SwitchesComponent implements OnInit, OnDestroy {
-  public static readonly subscription = 'World';
+  public static readonly subscription = 'mywebio/status';
 
   public device0State = State.Undefined;
   public device1State = State.Undefined;
@@ -59,33 +59,6 @@ export class SwitchesComponent implements OnInit, OnDestroy {
   }
 
 
-  /*
-   * Toggles an input in the web interfaces and
-   * initiates an MQTT publish
-   */
-  private ToggleOutput(ioname: string) {
-    const cell = document.getElementById(ioname);
-    let message: Message;
-    switch (cell.className) {
-      case 'on':
-        message = new Message('OFF');
-        message.destinationName = 'mywebio/' + ioname + '/set';
-        // this.mqttConnector.send(message);
-        cell.className = 'set_off';
-        break;
-      case 'off':
-        message = new Paho.MQTT.Message('ON');
-        message.destinationName = 'mywebio/' + ioname + '/set';
-        // this.mqttConnector.send(message);
-        cell.className = 'set_on';
-        break;
-      default:
-        cell.className = 'unknown';
-        break;
-    }
-
-  }
-
   ngOnInit() {
   }
 
@@ -94,16 +67,35 @@ export class SwitchesComponent implements OnInit, OnDestroy {
   }
 
 
-  public onDevice0Clicked() {
-    console.log('onDevice0Clicked');
+  public onState0Changed(state: State) {
+    console.log(`onState0Changed: state = ${state}`);
+    this.handleState(0, state);
   }
 
-  public onDevice1Clicked() {
-    console.log('onDevice1Clicked');
+  public onState1Changed(state: State) {
+    console.log(`onState1Changed: state = ${state}`);
+    this.handleState(1, state);
   }
 
   public onPublishMessage() {
     this.mqttService.unsafePublish(SwitchesComponent.subscription, `message-${new Date().getUTCMilliseconds()}`, { qos: 1, retain: true });
+  }
+
+  private handleState(device: number, state: State) {
+    switch (state) {
+      case State.On:
+      case State.Off:
+        this.publish(0, state);
+        break;
+
+      default:
+        throw new Error(`invalide state: ${state}`);
+    }
+  }
+
+
+  private publish(device: number, state: State) {
+    this.mqttService.unsafePublish(SwitchesComponent.subscription, state.toString(), { qos: 1, retain: true });
   }
 
 }
