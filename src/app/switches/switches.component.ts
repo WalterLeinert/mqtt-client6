@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Message } from 'paho-mqtt';
 
-import { MqttConnector } from './mqtt-connector';
+import { MqttConnectorService } from './mqtt-connector.service';
 
 
 @Component({
@@ -15,28 +15,28 @@ export class SwitchesComponent implements OnInit {
   public input1On = false;
   public output1On = true;
 
-  constructor(private mqttConnector: MqttConnector) {
-    this.mqttConnector.MessageArrived.subscribe((message: Message) => {
-      // tslint:disable-next-line:no-console
-      console.log(message.destinationName + ' : ' + message.payloadString);
-      let displayClass = 'unknown';
+  constructor(private mqttConnectorService: MqttConnectorService) {
+    // this.mqttConnectorService.MessageArrived.subscribe((message: Message) => {
+    //   // tslint:disable-next-line:no-console
+    //   console.log(message.destinationName + ' : ' + message.payloadString);
+    //   let displayClass = 'unknown';
 
-      switch (message.payloadString) {
-        case 'ON':
-          displayClass = 'on';
-          break;
-        case 'OFF':
-          displayClass = 'off';
-          break;
-        default:
-          displayClass = 'unknown';
-      }
-      const topic = message.destinationName.split('/');
-      if (topic.length === 3) {
-        const ioname = topic[1];
-        // TODO: this.UpdateElement(ioname, displayClass);
-      }
-    });
+    //   switch (message.payloadString) {
+    //     case 'ON':
+    //       displayClass = 'on';
+    //       break;
+    //     case 'OFF':
+    //       displayClass = 'off';
+    //       break;
+    //     default:
+    //       displayClass = 'unknown';
+    //   }
+    //   const topic = message.destinationName.split('/');
+    //   if (topic.length === 3) {
+    //     const ioname = topic[1];
+    //     // TODO: this.UpdateElement(ioname, displayClass);
+    //   }
+    // });
   }
 
 
@@ -51,13 +51,13 @@ export class SwitchesComponent implements OnInit {
       case 'on':
         message = new Message('OFF');
         message.destinationName = 'mywebio/' + ioname + '/set';
-        this.mqttConnector.send(message);
+        // this.mqttConnector.send(message);
         cell.className = 'set_off';
         break;
       case 'off':
         message = new Paho.MQTT.Message('ON');
         message.destinationName = 'mywebio/' + ioname + '/set';
-        this.mqttConnector.send(message);
+        // this.mqttConnector.send(message);
         cell.className = 'set_on';
         break;
       default:
@@ -86,6 +86,10 @@ export class SwitchesComponent implements OnInit {
 
   public onOutput1Clicked() {
     console.log('onOutput1Clicked');
+  }
+
+  public onPublishMessage() {
+    this.mqttConnectorService.send('message-' + new Date().getUTCMilliseconds());
   }
 
 }

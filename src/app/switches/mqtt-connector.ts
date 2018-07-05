@@ -1,6 +1,6 @@
 // tslint:disable:no-console
 
-import { Injectable, EventEmitter } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 import { Client, Message } from 'paho-mqtt';
 
@@ -9,7 +9,6 @@ import { Client, Message } from 'paho-mqtt';
 */
 
 
-@Injectable()
 export class MqttConnector {
     public static readonly hostname = 'm21.cloudmqtt.com';
     public static readonly port = 37719;
@@ -27,7 +26,7 @@ export class MqttConnector {
         this.mqttClient.onConnectionLost = this.onConnectionLost;
         this.mqttClient.onMessageArrived = this.onMessageArrived;
 
-        this.connect();
+        // this.connect();
     }
 
     public send(message: Message) {
@@ -35,7 +34,7 @@ export class MqttConnector {
     }
 
     /* Initiates a connection to the MQTT broker */
-    private connect() {
+    public connect() {
         this.mqttClient.connect({
             onFailure: this.onConnectionFailed,
             onSuccess: this.onConnected,
@@ -46,18 +45,18 @@ export class MqttConnector {
         });
     }
 
-    /*Callback for successful MQTT connection */
+    /* Callback for successful MQTT connection */
     private onConnected() {
         console.log('OnConnected');
         this.mqttClient.subscribe(MqttConnector.subscription);
     }
 
-    /*Callback for failed connection*/
+    /* Callback for failed connection */
     private onConnectionFailed(res) {
         console.log('Connect failed:' + res.errorMessage);
     }
 
-    /*Callback for lost connection*/
+    /* Callback for lost connection */
     private onConnectionLost(res) {
         if (res.errorCode !== 0) {
             console.log('Connection lost:' + res.errorMessage);
