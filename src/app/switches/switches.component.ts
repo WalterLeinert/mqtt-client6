@@ -40,16 +40,19 @@ export class SwitchesComponent implements OnInit, OnDestroy {
       const parts = message.topic.split('/');
       if (parts.length === 3) {
         const stateValue = Number.parseInt(this.message);
-        const device = Number.parseInt(parts[1]);
 
-        switch (device) {
-          case 0:
-            this.device0LabelState = stateValue as State;
-            break;
+        if (!isNaN(stateValue)) {
+          const device = Number.parseInt(parts[1]);
 
-          case 1:
-            this.device1LabelState = stateValue as State;
-            break;
+          switch (device) {
+            case 0:
+              this.device0LabelState = stateValue as State;
+              break;
+
+            case 1:
+              this.device1LabelState = stateValue as State;
+              break;
+          }
         }
 
       }
@@ -98,6 +101,7 @@ export class SwitchesComponent implements OnInit, OnDestroy {
 
 
   private publish(device: number, state: State) {
+    console.log(`SwitchesComponent.publish: device = ${device}, state = ${state}`);
     this.mqttService.unsafePublish(SwitchesComponent.createSubscription(
       SwitchesComponent.subscriptionTemplate, device.toString()), state.toString(), { qos: 1, retain: true });
   }
