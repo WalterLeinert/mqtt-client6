@@ -34,8 +34,8 @@ export class DeviceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateProperties();
-    this.updateLabelProperties();
+    this.updateProperties(this.state);
+    this.updateLabelProperties(this.labelState);
   }
 
   //
@@ -54,6 +54,7 @@ export class DeviceComponent implements OnInit {
   }
 
   protected onStateChange(value: State) {
+    this.updateProperties(value);
     this.stateChange.emit(value);
   }
 
@@ -72,7 +73,7 @@ export class DeviceComponent implements OnInit {
   }
 
   protected onLabelStateChange(value: State) {
-    this.updateLabelProperties();
+    this.updateLabelProperties(value);
   }
 
 
@@ -92,24 +93,25 @@ export class DeviceComponent implements OnInit {
       default:
         throw new Error(`invalide state: ${this.state}`);
     }
-
-    this.updateProperties();
   }
 
-  private updateProperties() {
-    const tuple = DeviceComponent.stateMap.get(this.state);
+  private updateProperties(state: State) {
+    const tuple = DeviceComponent.stateMap.get(state);
 
     this.buttonText = tuple.v1;
     const style = 'background-color: ' + tuple.v2;
     this.buttonStyle = this.sanitizer.bypassSecurityTrustStyle(style);
+
+    console.log(`updateProperties: state = ${state}, buttonStyle = ${this.buttonStyle}`);
   }
 
-  private updateLabelProperties() {
-    const tuple = DeviceComponent.stateMap.get(this.state);
+  private updateLabelProperties(state: State) {
+    const tuple = DeviceComponent.stateMap.get(state);
 
     this.labelText = tuple.v1;
     const style = 'background-color: ' + tuple.v2;
     this.labelStyle = this.sanitizer.bypassSecurityTrustStyle(style);
+    console.log(`updateLabelProperties: state = ${state}, labelStyle = ${this.labelStyle}`);
   }
 
 
