@@ -86,7 +86,6 @@ export class SwitchesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
   }
 
   ngOnDestroy(): void {
