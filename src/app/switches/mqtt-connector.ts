@@ -3,12 +3,14 @@
 import { EventEmitter } from '@angular/core';
 
 import { Client, Message } from 'paho-mqtt';
+import { deprecate } from 'util';
 
 /*
  * MQTT-WebClient example for Web-IO 4.0
 */
 
-
+// TODO deprecated: used ngx-mqtt instead!!
+// did not work correctly due to socket closed / reconnect issues
 export class MqttConnector {
     public static readonly hostname = 'm21.cloudmqtt.com';
     public static readonly port = 37719;

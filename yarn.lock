@@ -212,6 +212,10 @@
   dependencies:
     "@types/jasmine" "*"
 
+"@types/node@10.3.2":
+  version "10.3.2"
+  resolved "http://localhost:4873/@types%2fnode/-/node-10.3.2.tgz#3840ec6c12556fdda6e0e6d036df853101d732a4"
+
 "@types/node@^6.0.46":
   version "6.0.113"
   resolved "http://localhost:4873/@types%2fnode/-/node-6.0.113.tgz#4b41f38ad03e4b41f9dc259b3b58aecb22c9aebc"
@@ -1834,6 +1838,15 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
+ecstatic@>=3.2.0:
+  version "3.2.0"
+  resolved "http://localhost:4873/ecstatic/-/ecstatic-3.2.0.tgz#1b1aee1ca7c6b99cfb5cf6c9b26b481b90c4409f"
+  dependencies:
+    he "^1.1.1"
+    mime "^1.4.1"
+    minimist "^1.1.0"
+    url-join "^2.0.2"
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "http://localhost:4873/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -2740,7 +2753,7 @@ hawk@~3.1.3:
     hoek "2.x.x"
     sntp "1.x.x"
 
-he@1.1.x:
+he@1.1.x, he@^1.1.1:
   version "1.1.1"
   resolved "http://localhost:4873/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
@@ -3880,7 +3893,7 @@ minimist@0.0.8:
   version "0.0.8"
   resolved "http://localhost:4873/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
-minimist@^1.1.3, minimist@^1.2.0:
+minimist@^1.1.0, minimist@^1.1.3, minimist@^1.2.0:
   version "1.2.0"
   resolved "http://localhost:4873/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
 
@@ -4009,6 +4022,14 @@ neo-async@^2.5.0:
 next-tick@1:
   version "1.0.0"
   resolved "http://localhost:4873/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
+
+ngx-mqtt@^6.3.1:
+  version "6.3.1"
+  resolved "http://localhost:4873/ngx-mqtt/-/ngx-mqtt-6.3.1.tgz#8ff97ff1e1d0b85eb05395ef4a3442941cdbc83f"
+  dependencies:
+    "@types/node" "10.3.2"
+    ecstatic ">=3.2.0"
+    ssri ">=6.0.0"
 
 no-case@^2.2.0:
   version "2.3.2"
@@ -5618,6 +5639,10 @@ sshpk@^1.7.0:
     jsbn "~0.1.0"
     tweetnacl "~0.14.0"
 
+ssri@>=6.0.0:
+  version "6.0.0"
+  resolved "http://localhost:4873/ssri/-/ssri-6.0.0.tgz#fc21bfc90e03275ac3e23d5a42e38b8a1cbc130d"
+
 ssri@^5.2.4:
   version "5.3.0"
   resolved "http://localhost:4873/ssri/-/ssri-5.3.0.tgz#ba3872c9c6d33a0704a7d71ff045e5ec48999d06"
@@ -6124,6 +6149,10 @@ uri-js@^4.2.1:
 urix@^0.1.0:
   version "0.1.0"
   resolved "http://localhost:4873/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
+
+url-join@^2.0.2:
+  version "2.0.5"
+  resolved "http://localhost:4873/url-join/-/url-join-2.0.5.tgz#5af22f18c052a000a48d7b82c5e9c2e2feeda728"
 
 url-join@^4.0.0:
   version "4.0.0"

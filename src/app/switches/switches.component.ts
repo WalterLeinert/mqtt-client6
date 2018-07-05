@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Message } from 'paho-mqtt';
 
-import { MqttConnectorService } from './mqtt-connector.service';
+import { Subscription } from 'rxjs';
+
+
+import {
+  MqttService,
+  IMqttMessage,
+  IMqttServiceOptions
+} from 'ngx-mqtt';
+
 
 
 @Component({
@@ -9,13 +17,18 @@ import { MqttConnectorService } from './mqtt-connector.service';
   templateUrl: './switches.component.html',
   styleUrls: ['./switches.component.css']
 })
-export class SwitchesComponent implements OnInit {
+export class SwitchesComponent implements OnInit, OnDestroy {
+  public static readonly subscription = 'World';
+
   public input0On = false;
   public output0On = true;
   public input1On = false;
   public output1On = true;
 
-  constructor(private mqttConnectorService: MqttConnectorService) {
+  private subscription: Subscription;
+  public message: string;
+
+  constructor(private mqttService: MqttService) {
     // this.mqttConnectorService.MessageArrived.subscribe((message: Message) => {
     //   // tslint:disable-next-line:no-console
     //   console.log(message.destinationName + ' : ' + message.payloadString);
@@ -37,6 +50,11 @@ export class SwitchesComponent implements OnInit {
     //     // TODO: this.UpdateElement(ioname, displayClass);
     //   }
     // });
+
+    this.subscription = this.mqttService.observe(SwitchesComponent.subscription).subscribe((message: IMqttMessage) => {
+      this.message = message.payload.toString();
+      console.log(`SwitchesComponent.ctor: message = ${this.message}`);
+    });
   }
 
 
@@ -71,6 +89,10 @@ export class SwitchesComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
 
   public onInput0Clicked() {
     console.log('onInput0Clicked');
@@ -89,7 +111,7 @@ export class SwitchesComponent implements OnInit {
   }
 
   public onPublishMessage() {
-    this.mqttConnectorService.send('message-' + new Date().getUTCMilliseconds());
+    this.mqttService.unsafePublish(SwitchesComponent.subscription, `message-${new Date().getUTCMilliseconds()}`, {qos: 1, retain: true});
   }
 
 }
