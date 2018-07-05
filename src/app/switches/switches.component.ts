@@ -6,11 +6,10 @@ import { Subscription } from 'rxjs';
 
 import {
   MqttService,
-  IMqttMessage,
-  IMqttServiceOptions
+  IMqttMessage
 } from 'ngx-mqtt';
 
-
+import { State } from '../output/state.enum';
 
 @Component({
   selector: 'app-switches',
@@ -20,10 +19,12 @@ import {
 export class SwitchesComponent implements OnInit, OnDestroy {
   public static readonly subscription = 'World';
 
-  public input0On = false;
-  public output0On = true;
-  public input1On = false;
-  public output1On = true;
+  public device0State = State.Undefined;
+  public device1State = State.Undefined;
+
+  public device0LabelState = State.Undefined;
+  public device1LabelState = State.Undefined;
+
 
   private subscription: Subscription;
   public message: string;
@@ -93,24 +94,16 @@ export class SwitchesComponent implements OnInit, OnDestroy {
   }
 
 
-  public onInput0Clicked() {
-    console.log('onInput0Clicked');
+  public onDevice0Clicked() {
+    console.log('onDevice0Clicked');
   }
 
-  public onInput1Clicked() {
-    console.log('onInput1Clicked');
-  }
-
-  public onOutput0Clicked() {
-    console.log('onOutput0Clicked');
-  }
-
-  public onOutput1Clicked() {
-    console.log('onOutput1Clicked');
+  public onDevice1Clicked() {
+    console.log('onDevice1Clicked');
   }
 
   public onPublishMessage() {
-    this.mqttService.unsafePublish(SwitchesComponent.subscription, `message-${new Date().getUTCMilliseconds()}`, {qos: 1, retain: true});
+    this.mqttService.unsafePublish(SwitchesComponent.subscription, `message-${new Date().getUTCMilliseconds()}`, { qos: 1, retain: true });
   }
 
 }

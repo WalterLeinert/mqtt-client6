@@ -10,7 +10,6 @@ import {
 
 import { MqttConnector } from './mqtt-connector';
 import { SwitchesComponent } from './switches.component';
-import { InputComponent } from '../input/input.component';
 import { OutputComponent } from '../output/output.component';
 
 // TODO: configure from outside
@@ -26,12 +25,10 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 @NgModule({
   declarations: [
     SwitchesComponent,
-    InputComponent,
     OutputComponent
   ],
   exports: [
     SwitchesComponent,
-    InputComponent,
     OutputComponent
   ],
   imports: [
