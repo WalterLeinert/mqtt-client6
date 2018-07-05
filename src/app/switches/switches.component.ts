@@ -36,6 +36,23 @@ export class SwitchesComponent implements OnInit, OnDestroy {
     this.subscription = this.mqttService.observe(SwitchesComponent.subscription).subscribe((message: IMqttMessage) => {
       this.message = message.payload.toString();
       console.log(`SwitchesComponent.ctor: message = ${this.message}, topic = ${message.topic}`);
+
+      const parts = message.topic.split('/');
+      if (parts.length === 3) {
+        const stateValue = Number.parseInt(this.message);
+        const device = Number.parseInt(parts[1]);
+
+        switch (device) {
+          case 0:
+            this.device0LabelState = stateValue as State;
+            break;
+
+          case 1:
+            this.device1LabelState = stateValue as State;
+            break;
+        }
+
+      }
     });
   }
 
