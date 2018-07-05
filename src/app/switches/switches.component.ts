@@ -3,6 +3,8 @@ import { Message } from 'paho-mqtt';
 
 import { Subscription } from 'rxjs';
 
+import * as util from 'util';
+
 
 import {
   MqttService,
@@ -17,7 +19,8 @@ import { State } from '../device/state.enum';
   styleUrls: ['./switches.component.css']
 })
 export class SwitchesComponent implements OnInit, OnDestroy {
-  public static readonly subscription = 'mywebio/status';
+  public static readonly subscriptionTemplate = 'mywebio/%s/status';
+  public static readonly subscription = SwitchesComponent.createSubscription(SwitchesComponent.subscriptionTemplate, '+');
 
   public device0State = State.Undefined;
   public device1State = State.Undefined;
@@ -30,32 +33,14 @@ export class SwitchesComponent implements OnInit, OnDestroy {
   public message: string;
 
   constructor(private mqttService: MqttService) {
-    // this.mqttConnectorService.MessageArrived.subscribe((message: Message) => {
-    //   // tslint:disable-next-line:no-console
-    //   console.log(message.destinationName + ' : ' + message.payloadString);
-    //   let displayClass = 'unknown';
-
-    //   switch (message.payloadString) {
-    //     case 'ON':
-    //       displayClass = 'on';
-    //       break;
-    //     case 'OFF':
-    //       displayClass = 'off';
-    //       break;
-    //     default:
-    //       displayClass = 'unknown';
-    //   }
-    //   const topic = message.destinationName.split('/');
-    //   if (topic.length === 3) {
-    //     const ioname = topic[1];
-    //     // TODO: this.UpdateElement(ioname, displayClass);
-    //   }
-    // });
-
     this.subscription = this.mqttService.observe(SwitchesComponent.subscription).subscribe((message: IMqttMessage) => {
       this.message = message.payload.toString();
-      console.log(`SwitchesComponent.ctor: message = ${this.message}`);
+      console.log(`SwitchesComponent.ctor: message = ${this.message}, topic = ${message.topic}`);
     });
+  }
+
+  public static createSubscription(template: string, param: string): string {
+    return util.format(SwitchesComponent.subscriptionTemplate, param);
   }
 
 
@@ -78,14 +63,15 @@ export class SwitchesComponent implements OnInit, OnDestroy {
   }
 
   public onPublishMessage() {
-    this.mqttService.unsafePublish(SwitchesComponent.subscription, `message-${new Date().getUTCMilliseconds()}`, { qos: 1, retain: true });
+    this.mqttService.unsafePublish(SwitchesComponent.createSubscription(
+      SwitchesComponent.subscriptionTemplate, '0'), `message-${new Date().getUTCMilliseconds()}`, { qos: 1, retain: true });
   }
 
   private handleState(device: number, state: State) {
     switch (state) {
       case State.On:
       case State.Off:
-        this.publish(0, state);
+        this.publish(device, state);
         break;
 
       default:
@@ -95,7 +81,8 @@ export class SwitchesComponent implements OnInit, OnDestroy {
 
 
   private publish(device: number, state: State) {
-    this.mqttService.unsafePublish(SwitchesComponent.subscription, state.toString(), { qos: 1, retain: true });
+    this.mqttService.unsafePublish(SwitchesComponent.createSubscription(
+      SwitchesComponent.subscriptionTemplate, device.toString()), state.toString(), { qos: 1, retain: true });
   }
 
 }
